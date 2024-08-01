@@ -89,8 +89,11 @@ public class RecommendationService {
                 .collect(Collectors.joining(", "));
 
         String availableBlogs = blogList.stream()
+                .filter(blog -> readHistory.stream()
+                        .noneMatch(history -> history.getTitle().equals(blog.getTitle()) &&
+                                history.getText().equals(blog.getText())))
                 .map(blog -> "Title: " + blog.getTitle() + ", Text: " + blog.getText()
-                        + ", Image: " + blog.getImage())
+                        + ", Image: " + blog.getImage()+ ", Tags: " + blog.getBlogTags())
                 .collect(Collectors.joining(", "));
 
         promptTemplate.add("readBlogs", readBlogs);

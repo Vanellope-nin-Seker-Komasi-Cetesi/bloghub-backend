@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 public class BlogRecommendation {
 
-    private List<BlogResponse> blogRecResponses=new ArrayList<>();
+    private List<BlogRecommendationResponse> blogRecommendationResponses=new ArrayList<>();
 
 }
