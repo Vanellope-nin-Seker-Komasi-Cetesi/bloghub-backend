@@ -62,10 +62,10 @@ public class RecommendationService {
     }
 */
 
-    public BlogRecommendation getBlogRecommendations() {
+    public BlogRecommendation getBlogRecommendations(String email) {
 
         List<UserReadHistory> readHistory = readHistoryService.getReadHistory();
-        List<BlogResponse> blogList = blogService.getAll();
+        List<BlogResponse> blogList = blogService.getUserNotBlogs(email);
         BeanOutputParser<BlogRecommendation> parser = new BeanOutputParser<>(BlogRecommendation.class);
 
         String promptString = """

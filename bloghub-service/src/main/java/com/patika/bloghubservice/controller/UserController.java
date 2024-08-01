@@ -3,7 +3,7 @@ package com.patika.bloghubservice.controller;
 import com.patika.bloghubservice.dto.request.BlogTagRequest;
 import com.patika.bloghubservice.dto.request.PasswordUpdate;
 import com.patika.bloghubservice.dto.request.UserSaveRequest;
-import com.patika.bloghubservice.dto.response.BlogRecommendationResponse;
+import com.patika.bloghubservice.dto.response.BlogResponse;
 import com.patika.bloghubservice.dto.response.GenericResponse;
 import com.patika.bloghubservice.dto.response.UserResponse;
 import com.patika.bloghubservice.messages.GenericMessage;
@@ -66,9 +66,14 @@ public class UserController {
         return new GenericMessage("Tag eklendi");
     }
 
-    @GetMapping("/users/{email}/recommendations")
-    public GenericResponse<List<BlogRecommendationResponse>> getBlogRecommendations(@PathVariable String email) {
-        return GenericResponse.success(blogService.getBlogRecommendations(email), HttpStatus.OK);
+    @GetMapping("/{email}/blogs")
+    public GenericResponse<List<BlogResponse>> getUserBlogs(@PathVariable String email) {
+        return GenericResponse.success(blogService.getUserBlogs(email), HttpStatus.OK);
+    }
+
+    @GetMapping("/{email}/other-blogs")
+    public GenericResponse<List<BlogResponse>> getUserNotBlogs(@PathVariable String email) {
+        return GenericResponse.success(blogService.getUserNotBlogs(email), HttpStatus.OK);
     }
 
 }

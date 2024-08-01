@@ -3,12 +3,10 @@ package com.patika.bloghubservice.service;
 import com.patika.bloghubservice.converter.BlogCommentConverter;
 import com.patika.bloghubservice.converter.BlogConverter;
 import com.patika.bloghubservice.converter.BlogTagConverter;
-import com.patika.bloghubservice.converter.UserConverter;
 import com.patika.bloghubservice.dto.request.BlogCommentRequest;
 import com.patika.bloghubservice.dto.request.BlogSaveRequest;
 import com.patika.bloghubservice.dto.request.BlogTagRequest;
 import com.patika.bloghubservice.dto.response.BlogCommentResponse;
-import com.patika.bloghubservice.dto.response.BlogRecommendationResponse;
 import com.patika.bloghubservice.dto.response.BlogResponse;
 import com.patika.bloghubservice.exception.*;
 import com.patika.bloghubservice.file.FileService;
@@ -175,11 +173,18 @@ public class BlogService {
 
     }
 
-    public List<BlogRecommendationResponse> getBlogRecommendations(String email) {
+    public List<BlogResponse> getUserBlogs(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
         List<Blog> blogs = blogRepository.findByUserBlogs(user);
 
-        List<BlogRecommendationResponse> responses = UserConverter.toBlogRecommendationResponseList(user, blogs);
-        return responses;
+        return BlogConverter.toResponse(blogs);
+    }
+
+
+    public List<BlogResponse> getUserNotBlogs(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+        List<Blog> blogs = blogRepository.findByUserNotBlogs(user);
+
+        return BlogConverter.toResponse(blogs);
     }
 }

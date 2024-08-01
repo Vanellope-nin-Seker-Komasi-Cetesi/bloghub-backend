@@ -64,10 +64,15 @@ public class BlogRepository {
 
     }
 
-
     public List<Blog> findByUserBlogs(User user) {
         return blogMap.values().stream()
                 .filter(blog -> blog.getUser().equals(user))
+                .collect(Collectors.toList());
+    }
+
+    public List<Blog> findByUserNotBlogs(User user) {
+        return blogMap.values().stream()
+                .filter(blog -> !blog.getUser().equals(user))
                 .collect(Collectors.toList());
     }
 }
